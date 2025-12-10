@@ -66,7 +66,10 @@ bool my_serial::SetStopBits(QString stopBitsStr)
         return port.setStopBits(QSerialPort::OneAndHalfStop);
     else if(stopBitsStr == "2")
         return port.setStopBits(QSerialPort::TwoStop);
-    return false;
+    else {
+        qDebug() << "Invalid stop bits value:" << stopBitsStr;
+        return false;
+    }
 }
 
 bool my_serial::SetParity(QString q) //

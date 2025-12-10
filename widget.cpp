@@ -213,8 +213,8 @@ void Widget::on_pushButton_transmit_clicked()
     if(ui->checkBox_THEX->isChecked())
     {
         //检测输入是否符合规范
-        // 移除所有空格，方便用户输入
-        QString cleanText = text.remove(' ').remove('\n').remove('\r').remove('\t');
+        // 移除所有空格，方便用户输入（创建新字符串避免修改原始文本）
+        QString cleanText = QString(text).remove(' ').remove('\n').remove('\r').remove('\t');
         QByteArray tmp = cleanText.toLatin1();
         if(tmp.size()%2 != 0){
             QMessageBox::information(this,"warn","输入不合法！十六进制字符数必须为偶数");return;}
