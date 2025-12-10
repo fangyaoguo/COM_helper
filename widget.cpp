@@ -84,7 +84,10 @@ void Widget::handleSerialData()
     displayText = QString::fromUtf8(receivedData);
 
     // 方案3：十六进制显示
-    else displayText = receivedData.toHex().toUpper();
+    else {
+        QByteArray hexData = receivedData.toHex(' ').toUpper();
+        displayText = QString::fromLatin1(hexData);
+    }
 
     // 3. 追加到文本编辑框
     ui->textEdit_receive->moveCursor(QTextCursor::End);
@@ -167,7 +170,7 @@ void Widget::on_Serial_button_clicked()
         serial.SetBaudRate(ui->baud_select->currentText().toLong());
         serial.SetDataBits(ui->Data_bit_sclect->currentText().toInt());
         serial.SetFlowControl();
-        serial.SetStopBits(ui->Stop_bit_select->currentText().toInt());
+        serial.SetStopBits(ui->Stop_bit_select->currentText());
         serial.SetParity(ui->Parity_select->currentText());
         if(serial.open()){
          ui->Serial_button->setText(tr("关闭串口"));
@@ -210,14 +213,16 @@ void Widget::on_pushButton_transmit_clicked()
     if(ui->checkBox_THEX->isChecked())
     {
         //检测输入是否符合规范
-        QByteArray tmp = text.toLocal8Bit();
+        // 移除所有空格，方便用户输入（创建新字符串避免修改原始文本）
+        QString cleanText = QString(text).remove(' ').remove('\n').remove('\r').remove('\t');
+        QByteArray tmp = cleanText.toLatin1();
         if(tmp.size()%2 != 0){
-            QMessageBox::information(this,"warn","输入不合法！");return;}
+            QMessageBox::information(this,"warn","输入不合法！十六进制字符数必须为偶数");return;}
         for(char c : tmp)
         {
             if(!std::isxdigit(c))
             {
-                QMessageBox::information(this,"warn","输入不合法！");return;
+                QMessageBox::information(this,"warn","输入不合法！只能包含0-9和A-F字符");return;
             }
         }
         QByteArray send = QByteArray::fromHex(tmp);
