@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>icon.ico</file>
+    </qresource>
+    <qresource prefix="/res">
+        <file>flash.jpg</file>
+    </qresource>
+</RCC>
