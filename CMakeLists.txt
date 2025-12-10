@@ -17,6 +17,8 @@ set(PROJECT_SOURCES
         widget.cpp
         widget.h
         widget.ui
+        my_serial.h
+        my_serial.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -24,8 +26,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         res.qrc
-        my_serial.cpp
-
     )
 target_link_libraries(COM PRIVATE Qt6::SerialPort)
 # Define target properties for Android with Qt 6 as:

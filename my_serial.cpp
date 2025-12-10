@@ -58,13 +58,13 @@ bool my_serial::SetDataBits(int a)
         return false;
 }
 
-bool my_serial::SetStopBits(int a)
+bool my_serial::SetStopBits(QString stopBitsStr)
 {
-    if(a == 1)
+    if(stopBitsStr == "1")
         return port.setStopBits(QSerialPort::OneStop);
-    else if(a == 1.5)
+    else if(stopBitsStr == "1.5")
         return port.setStopBits(QSerialPort::OneAndHalfStop);
-    else if(a == 2)
+    else if(stopBitsStr == "2")
         return port.setStopBits(QSerialPort::TwoStop);
     return false;
 }

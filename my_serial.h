@@ -15,7 +15,7 @@ public:
     void close();
     bool SetBaudRate(qint32 baudRate);
     bool SetDataBits(int a);
-    bool SetStopBits(int a);
+    bool SetStopBits(QString stopBitsStr);
     bool SetParity(QString q);
     bool SetFlowControl();
     void SetPortName(QString &name);
